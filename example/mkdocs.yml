@@ -1,0 +1,78 @@
+site_name: Shadcn Theme Example
+site_url: https://example.com/mkdocs-shadcn-theme
+repo_url: https://github.com/example/mkdocs-shadcn-theme
+repo_name: mkdocs-shadcn-theme
+nav:
+  - Introduction: index.md
+  - Components:
+      - Overview: components/index.md
+      - Buttons: components/buttons.md
+      - Cards: components/cards.md
+  - Guides:
+      - Theming: guides/theming.md
+      - Accessibility: guides/accessibility.md
+  - Changelog: changelog.md
+  - i18n:
+      - Welcome (fr): i18n/fr/bienvenue.md
+      - Willkommen (de): i18n/de/willkommen.md
+plugins:
+  - search
+  - minify
+  - redirects
+  - git-revision-date-localized:
+      enable_creation_date: true
+      fallback_to_build_date: true
+  - awesome-pages
+extra:
+  versions:
+    - name: latest
+      url: /
+      current: true
+    - name: v0.9
+      url: /v0.9/
+
+markdown_extensions:
+  - admonition
+  - codehilite
+  - toc:
+      permalink: true
+      slugify: !!python/name:mkdocs.utils.slugify
+      separator: -
+  - pymdownx.details
+  - pymdownx.superfences
+  - pymdownx.highlight
+
+extra_css:
+  - assets/css/custom.css
+
+extra_javascript:
+  - assets/js/custom.js
+
+theme:
+  name: shadcn
+  language: en
+  features:
+    - search
+    - toc.integrated
+    - navigation.sections
+    - code.copy
+    - palette.switcher
+  options:
+    brand:
+      name: "Acme Docs"
+      logo_light: assets/logo-light.svg
+      logo_dark: assets/logo-dark.svg
+    layout:
+      max_width: "1200px"
+      sidebar_width: "18rem"
+    palette:
+      primary: "var(--primary)"
+      accent: "var(--ring)"
+      muted: "var(--muted)"
+      ring: "var(--ring)"
+    search:
+      provider: lunr
+    versioning:
+      enabled: true
+    a11y:
+      high_contrast: false

@@ -1,0 +1,13 @@
+{
+  "name": "mkdocs-shadcn-theme-build",
+  "private": true,
+  "scripts": {
+    "build:css": "tailwindcss -c tailwind.config.cjs -i ./src-css/index.css -o ./mkdocs_shadcn_theme/assets/css/theme.css --minify",
+    "watch:css": "tailwindcss -c tailwind.config.cjs -i ./src-css/index.css -o ./mkdocs_shadcn_theme/assets/css/theme.css --watch"
+  },
+  "devDependencies": {
+    "autoprefixer": "^10.4.16",
+    "postcss": "^8.4.31",
+    "tailwindcss": "^3.4.3"
+  }
+}

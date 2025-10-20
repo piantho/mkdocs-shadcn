@@ -1,0 +1,24 @@
+<header class="flex items-center justify-between border-b border-muted py-4">
+  <div class="flex items-center gap-3">
+    {% set brand = config.theme.options.brand if config.theme.options and config.theme.options.brand else {} %}
+    {% if brand.logo_light %}
+    <img src="{{ brand.logo_light | url }}" alt="{{ brand.name or config.site_name }}" class="h-8 dark:hidden">
+    {% endif %}
+    {% if brand.logo_dark %}
+    <img src="{{ brand.logo_dark | url }}" alt="{{ brand.name or config.site_name }}" class="hidden h-8 dark:block">
+    {% endif %}
+    <span class="text-lg font-semibold">{{ brand.name or config.site_name }}</span>
+  </div>
+  <div class="flex items-center gap-4">
+    {% include "partials/search.html" %}
+    {% if config.theme.features and 'palette.switcher' in config.theme.features %}
+    <button type="button" class="rounded-md border border-muted px-3 py-1 text-sm" data-toggle-theme>
+      <span class="dark:hidden">Dark</span>
+      <span class="hidden dark:inline">Light</span>
+    </button>
+    {% endif %}
+    {% if config.theme.options and config.theme.options.versioning and config.theme.options.versioning.enabled %}
+      {% include "partials/version_switcher.html" %}
+    {% endif %}
+  </div>
+</header>

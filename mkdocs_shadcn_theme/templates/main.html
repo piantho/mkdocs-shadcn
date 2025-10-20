@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="{{ config.theme.language or 'en' }}" class="no-js">
+<head>
+  {% block head %}
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <link rel="stylesheet" href="{{ 'assets/css/theme.css' | url }}">
+  <title>{% if page.title %}{{ page.title }} - {% endif %}{{ config.site_name }}</title>
+  {% endblock %}
+</head>
+<body class="bg-bg text-fg">
+  {% include "partials/header.html" %}
+  <div class="mx-auto max-w-screen-xl grid grid-cols-[18rem_1fr] gap-8 px-6">
+    {% include "partials/nav.html" %}
+    <main id="content" class="prose max-w-none">{% block content %}{{ page.content }}{% endblock %}</main>
+    {% include "partials/toc.html" %}
+  </div>
+  {% include "partials/footer.html" %}
+  <script src="{{ 'assets/js/theme.js' | url }}" defer></script>
+</body>
+</html>

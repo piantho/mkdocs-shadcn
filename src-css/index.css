@@ -1,0 +1,25 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root{
+  --bg: 0 0% 100%;
+  --fg: 224 71% 4%;
+  --muted: 220 14% 96%;
+  --muted-fg: 220 8% 45%;
+  --primary: 221 83% 53%;
+  --primary-fg: 0 0% 100%;
+  --ring: 221 83% 53%;
+  --radius-sm: 0.25rem;
+  --radius-md: 0.5rem;
+  --radius-lg: 0.75rem;
+}
+.dark{
+  --bg: 224 71% 4%;
+  --fg: 213 31% 91%;
+  --muted: 223 47% 11%;
+  --muted-fg: 215 20% 65%;
+  --primary: 217 91% 60%;
+  --primary-fg: 0 0% 0%;
+  --ring: 217 91% 60%;
+}

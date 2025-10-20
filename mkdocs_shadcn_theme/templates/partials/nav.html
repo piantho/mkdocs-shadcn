@@ -1,0 +1,16 @@
+<nav class="sticky top-24 max-h-[calc(100vh-6rem)] overflow-y-auto pr-4" aria-label="Primary">
+  <ul class="space-y-2">
+    {% for nav_item in nav %}
+    <li>
+      <a href="{{ nav_item.url | url }}" class="block rounded-md px-3 py-2 hover:bg-muted">{{ nav_item.title }}</a>
+      {% if nav_item.children %}
+      <ul class="ml-4 space-y-1 border-l border-muted pl-3">
+        {% for child in nav_item.children %}
+        <li><a href="{{ child.url | url }}" class="block rounded-md px-3 py-1 text-sm hover:bg-muted">{{ child.title }}</a></li>
+        {% endfor %}
+      </ul>
+      {% endif %}
+    </li>
+    {% endfor %}
+  </ul>
+</nav>

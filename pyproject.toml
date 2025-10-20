@@ -1,0 +1,28 @@
+[build-system]
+requires = ["setuptools>=68","wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "mkdocs-shadcn-theme"
+version = "0.1.0"
+description = "A Shadcn-inspired Tailwind theme for MkDocs"
+readme = "README.md"
+authors = [{name = "MkDocs Shadcn Team"}]
+license = {text="MIT"}
+dependencies = ["mkdocs>=1.6.0"]
+requires-python = ">=3.9"
+
+[project.urls]
+Homepage = "https://example.com/mkdocs-shadcn-theme"
+Repository = "https://github.com/example/mkdocs-shadcn-theme"
+Issues = "https://github.com/example/mkdocs-shadcn-theme/issues"
+
+[tool.setuptools.package-data]
+"mkdocs_shadcn_theme" = [
+  "theme.yml",
+  "templates/**/*.html",
+  "assets/css/*.css",
+  "assets/js/*.js",
+  "assets/icons/*.svg",
+  "static/**/*"
+]
