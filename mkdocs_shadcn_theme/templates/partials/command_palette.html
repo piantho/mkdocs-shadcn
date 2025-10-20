@@ -1,0 +1,58 @@
+<div data-command-palette role="dialog" aria-modal="true" aria-labelledby="command-palette-title">
+  <div class="command-palette-panel">
+    <input 
+      type="text" 
+      class="command-palette-input" 
+      id="command-palette-title"
+      placeholder="Type a command or search..."
+      data-command-palette-input
+      aria-label="Command palette search"
+    />
+    <div class="command-palette-list" data-command-palette-list>
+      <a href="{{ config.site_url or '/' }}" class="command-palette-item" data-command-item>
+        <svg class="command-palette-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <span class="command-palette-label">Go to Home</span>
+      </a>
+      {% if config.nav %}
+        {% for nav_item in config.nav %}
+          {% if nav_item.children %}
+            {% for child in nav_item.children %}
+              <a href="{{ child.url | url }}" class="command-palette-item" data-command-item>
+                <svg class="command-palette-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" stroke-linecap="round" stroke-linejoin="round"/>
+                  <polyline points="14 2 14 8 20 8" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                <span class="command-palette-label">{{ child.title }}</span>
+              </a>
+            {% endfor %}
+          {% else %}
+            <a href="{{ nav_item.url | url }}" class="command-palette-item" data-command-item>
+              <svg class="command-palette-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" stroke-linecap="round" stroke-linejoin="round"/>
+                <polyline points="14 2 14 8 20 8" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              <span class="command-palette-label">{{ nav_item.title }}</span>
+            </a>
+          {% endif %}
+        {% endfor %}
+      {% endif %}
+      <button type="button" class="command-palette-item" data-command-item data-action="toggle-theme">
+        <svg class="command-palette-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <span class="command-palette-label">Toggle Theme</span>
+        <span class="command-palette-kbd">T</span>
+      </button>
+      <button type="button" class="command-palette-item" data-command-item data-action="show-help">
+        <svg class="command-palette-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="10" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3M12 17h.01" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <span class="command-palette-label">Show Keyboard Shortcuts</span>
+        <span class="command-palette-kbd">?</span>
+      </button>
+    </div>
+  </div>
+</div>

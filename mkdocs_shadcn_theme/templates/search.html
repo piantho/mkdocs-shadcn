@@ -1,0 +1,36 @@
+{% extends "main.html" %}
+
+{% block content %}
+<section class="space-y-8">
+  <div class="flex flex-col gap-6 rounded-lg border border-muted bg-muted/20 px-6 py-6 md:flex-row md:items-center md:justify-between md:gap-10 md:px-8">
+    <div class="space-y-2">
+      <h1 class="text-3xl font-semibold tracking-tight text-fg">{{ page.title or "Search" }}</h1>
+      <p class="text-sm text-muted-fg">Find components, guides, and references across the documentation.</p>
+    </div>
+    <form class="relative w-full max-w-xl"
+          role="search"
+          action="{{ 'search.html' | url }}"
+          method="get"
+          data-search-form>
+      <label class="sr-only" for="mkdocs-search-query">Search</label>
+      <span class="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-muted-fg">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <path d="m21 21-4.35-4.35M10.5 18a7.5 7.5 0 1 1 0-15 7.5 7.5 0 0 1 0 15z" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+      </span>
+      <input id="mkdocs-search-query"
+             name="q"
+             type="search"
+             value=""
+             placeholder="Search docs..."
+             autocomplete="off"
+             class="w-full rounded-md border border-muted bg-bg pl-10 pr-12 py-3 text-base text-fg placeholder:text-muted-fg focus:outline-none focus:ring-2 focus:ring-ring"
+             data-search-input>
+      <span class="pointer-events-none absolute right-3 top-1/2 hidden -translate-y-1/2 text-xs font-medium uppercase tracking-wide text-muted-fg sm:inline">Enter</span>
+    </form>
+  </div>
+  <div id="mkdocs-search-results" class="space-y-4">
+    <p class="rounded-lg border border-dashed border-muted/60 bg-muted/30 px-4 py-6 text-sm text-muted-fg">Start typing above to explore the docs.</p>
+  </div>
+</section>
+{% endblock %}

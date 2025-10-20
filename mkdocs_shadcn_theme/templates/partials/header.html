@@ -1,0 +1,50 @@
+{% set brand = config.theme.options.brand if config.theme.options and config.theme.options.brand else {} %}
+{% set brand_name = brand.name or config.site_name %}
+{% set initials_source = brand.initials if brand.initials is defined else brand_name %}
+{% set initials_clean = (initials_source | default('', true)) | replace(' ', '') | replace('-', '') | replace('_', '') %}
+{% set brand_initials = initials_clean[:2] | upper %}
+<header class="sticky top-0 z-40 border-b border-muted bg-bg/95 backdrop-blur supports-[backdrop-filter]:bg-bg/80">
+  <div class="flex w-full items-center justify-between gap-4 px-6 py-4 md:px-8">
+    <div class="flex items-center gap-3">
+      <button type="button"
+              class="inline-flex h-10 w-10 items-center justify-center rounded-md border border-muted text-fg transition hover:bg-muted md:hidden"
+              data-sidebar-toggle
+              aria-controls="site-sidebar"
+              aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <path d="M4 7h16M4 12h16M4 17h16" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+      </button>
+      {% if brand_initials %}
+      <span class="flex h-10 w-10 items-center justify-center rounded-full bg-primary text-sm font-semibold uppercase tracking-wide text-primary-fg">{{ brand_initials }}</span>
+      {% endif %}
+      <span class="text-lg font-semibold">{{ brand_name }}</span>
+    </div>
+    <div class="flex items-center gap-3">
+      {% include "partials/search.html" %}
+      {% if config.theme.features and 'palette.switcher' in config.theme.features %}
+      <button type="button" class="inline-flex items-center gap-2 rounded-md border border-muted px-3 py-2 text-sm transition hover:bg-muted" data-toggle-theme>
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 dark:hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <path d="M12 3v2m6.364.636-1.414 1.414M21 12h-2M18.364 18.364l-1.414-1.414M12 19v2M7.05 18.364l1.414-1.414M5 12H3m4.05-6.364 1.414 1.414M12 8a4 4 0 1 0 0 8" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+        <svg xmlns="http://www.w3.org/2000/svg" class="hidden h-4 w-4 dark:block" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+        <span class="text-xs font-medium uppercase tracking-wide text-muted-fg">Theme</span>
+      </button>
+      {% endif %}
+      {% if config.repo_url %}
+      <a href="{{ config.repo_url }}" class="hidden items-center gap-2 rounded-md border border-muted px-3 py-2 text-sm text-muted-fg transition hover:bg-muted hover:text-fg sm:inline-flex">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <path d="M12 3c-3.866 0-7 3.134-7 7 0 3.094 2.005 5.72 4.787 6.625.35.064.476-.152.476-.337 0-.166-.006-.606-.01-1.19-1.947.423-2.357-.938-2.357-.938-.318-.808-.777-1.024-.777-1.024-.635-.434.048-.425.048-.425.703.049 1.073.721 1.073.721.625 1.07 1.64.761 2.04.582.064-.453.245-.761.446-.936-1.554-.177-3.188-.777-3.188-3.459 0-.764.273-1.388.72-1.878-.072-.178-.312-.893.068-1.861 0 0 .587-.188 1.924.717.558-.155 1.156-.233 1.752-.236.596.003 1.194.081 1.752.236 1.337-.905 1.923-.717 1.923-.717.38.968.141 1.683.069 1.861.448.49.719 1.114.719 1.878 0 2.689-1.637 3.279-3.197 3.452.252.217.477.646.477 1.303 0 .942-.009 1.702-.009 1.934 0 .187.125.404.48.335C16.997 15.717 19 13.09 19 10c0-3.866-3.134-7-7-7z" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+        <span>GitHub</span>
+      </a>
+      {% endif %}
+      {% if config.theme.options and config.theme.options.versioning and config.theme.options.versioning.enabled %}
+        {% include "partials/version_switcher.html" %}
+      {% endif %}
+    </div>
+  </div>
+</header>

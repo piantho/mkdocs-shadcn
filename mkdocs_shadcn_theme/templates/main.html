@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="{{ config.theme.language or 'en' }}" class="no-js">
+<head>
+  {% block head %}
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <link rel="stylesheet" href="{{ 'assets/css/theme.css' | url }}">
+  <title>{% if page.title %}{{ page.title }} - {% endif %}{{ config.site_name }}</title>
+  {% endblock %}
+</head>
+<body class="bg-bg text-fg antialiased">
+  <script>document.documentElement.classList.remove('no-js');</script>
+  <div class="relative flex min-h-screen flex-col">
+    {% include "partials/header.html" %}
+    <div class="relative flex flex-1">
+      {% include "partials/nav.html" %}
+      <div data-sidebar-backdrop class="fixed inset-0 z-30 pointer-events-none opacity-0 transition-opacity duration-200 md:hidden"></div>
+      <div class="flex min-w-0 flex-1">
+        <div class="mx-auto flex w-full max-w-6xl flex-1 gap-10 px-6 py-10 lg:max-w-7xl">
+          <main id="content" class="min-w-0 flex-1">{% block content %}{{ page.content }}{% endblock %}</main>
+          {% include "partials/toc.html" %}
+        </div>
+      </div>
+    </div>
+    {% include "partials/footer.html" %}
+  </div>
+  {% include "partials/command_palette.html" %}
+  {% include "partials/help_overlay.html" %}
+  <script src="{{ 'assets/js/theme.js' | url }}" defer></script>
+</body>
+</html>

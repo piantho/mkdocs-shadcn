@@ -1,0 +1,99 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  release:
+    types: [published]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+
+      # --- Node / PNPM ---
+      - name: Setup PNPM
+        uses: pnpm/action-setup@v4
+        with:
+          run_install: false
+      - name: Install JS dependencies
+        run: pnpm install --frozen-lockfile
+      - name: Build Tailwind CSS
+        run: pnpm run build:css
+
+      # --- Python / Poetry ---
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - name: Install Poetry via pipx
+        run: |
+          python -m pip install --upgrade pip pipx
+          pipx install poetry
+          poetry --version
+      - name: Configure Poetry (in-project venv)
+        run: |
+          poetry config virtualenvs.create true
+          poetry config virtualenvs.in-project true
+      - name: Cache .venv
+        uses: actions/cache@v4
+        with:
+          path: .venv
+          key: venv-${{ runner.os }}-py${{ steps.setup-python.outputs.python-version }}-${{ hashFiles('poetry.lock') }}
+          restore-keys: |
+            venv-${{ runner.os }}-py${{ steps.setup-python.outputs.python-version }}-
+      - name: Install Python dependencies
+        run: poetry install --no-interaction --no-ansi
+
+      # --- MkDocs build (output in ./site) ---
+      - name: Build MkDocs site
+        run: poetry run mkdocs build --config-file example/mkdocs.yml --site-dir site
+      - name: Strict MkDocs build
+        run: poetry run mkdocs build --config-file example/mkdocs.yml --strict --site-dir site-strict
+
+      # --- Upload Pages artifact ---
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: example/site
+
+  deploy-pages:
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+      contents: read
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
+
+  publish-pypi:
+    if: github.event_name == 'release'
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write   # required for PyPI trusted publishing
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - name: Build wheel and sdist
+        run: |
+          python -m pip install --upgrade pip build
+          python -m build
+      - name: Publish to PyPI
+        uses: pypa/gh-action-pypi-publish@release/v1

@@ -1,0 +1,23 @@
+{% if config.theme.features and 'search' in config.theme.features %}
+<form id="site-search"
+      class="relative w-40 sm:w-56 lg:w-72 xl:w-80"
+      role="search"
+      action="{{ 'search.html' | url }}"
+      method="get"
+      data-search-form>
+  <label class="sr-only" for="search-input">Search</label>
+  <span class="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-muted-fg">
+    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+      <path d="m21 21-4.35-4.35M10.5 18a7.5 7.5 0 1 1 0-15 7.5 7.5 0 0 1 0 15z" stroke-linecap="round" stroke-linejoin="round" />
+    </svg>
+  </span>
+  <input id="search-input"
+         name="q"
+         type="search"
+         placeholder="Search docs..."
+         autocomplete="off"
+         class="w-full rounded-md border border-muted bg-bg pl-10 pr-10 py-2 text-sm text-fg placeholder:text-muted-fg focus:outline-none focus:ring-2 focus:ring-ring"
+         data-search-input>
+  <span class="pointer-events-none absolute right-3 top-1/2 hidden -translate-y-1/2 text-xs font-medium uppercase tracking-wide text-muted-fg sm:inline">/</span>
+</form>
+{% endif %}

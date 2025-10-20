@@ -1,0 +1,23 @@
+{% if page.toc %}
+<aside class="hidden w-64 shrink-0 xl:block" aria-label="On this page">
+  <div class="sticky top-[6.5rem] max-h-[calc(100vh-8rem)] overflow-y-auto rounded-lg border border-muted bg-muted/20 px-4 py-4">
+    <h2 class="mb-4 text-xs font-semibold uppercase tracking-wide text-muted-fg">On this page</h2>
+    <nav>
+      <ul class="space-y-1 text-sm">
+        {% for toc_item in page.toc %}
+        <li>
+          <a href="{{ toc_item.url }}" class="block rounded-md px-3 py-1 text-muted-fg transition hover:bg-muted hover:text-fg">{{ toc_item.title }}</a>
+          {% if toc_item.children %}
+          <ul class="ml-3 mt-1 space-y-1 border-l border-muted pl-2">
+            {% for child in toc_item.children %}
+            <li><a href="{{ child.url }}" class="block rounded-md px-3 py-1 text-muted-fg transition hover:bg-muted hover:text-fg">{{ child.title }}</a></li>
+            {% endfor %}
+          </ul>
+          {% endif %}
+        </li>
+        {% endfor %}
+      </ul>
+    </nav>
+  </div>
+</aside>
+{% endif %}

@@ -1,0 +1,62 @@
+<nav id="site-sidebar"
+     data-sidebar
+     data-state="closed"
+     class="fixed inset-y-0 left-0 z-40 flex w-72 -translate-x-full flex-col border-r border-muted bg-bg/95 px-6 py-6 shadow-lg transition-transform duration-200 ease-out md:sticky md:top-[4.5rem] md:z-30 md:h-[calc(100vh-4.5rem)] md:w-64 md:translate-x-0 md:self-start md:border-r md:bg-bg/95 md:px-6 md:py-10 md:shadow-none md:transition-none"
+     aria-label="Primary">
+  <div class="flex h-full flex-col gap-6 overflow-hidden">
+    <div class="flex items-center justify-between md:hidden">
+      <span class="text-sm font-semibold uppercase tracking-wide text-muted-fg">Navigation</span>
+      <button type="button"
+              class="inline-flex h-9 w-9 items-center justify-center rounded-md border border-muted text-fg transition hover:bg-muted"
+              data-sidebar-close
+              aria-controls="site-sidebar">
+        <span class="sr-only">Close navigation</span>
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <path d="M6 6l12 12M18 6L6 18" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+      </button>
+    </div>
+    <div class="flex-1 overflow-y-auto pr-2">
+      <ul class="space-y-2 text-sm">
+        {% for nav_item in nav %}
+        <li>
+          <a href="{{ nav_item.url | url }}" class="flex items-center justify-between rounded-md px-3 py-2 font-medium transition hover:bg-muted hover:text-fg {% if nav_item.active %}bg-muted text-fg{% else %}text-muted-fg{% endif %}">
+            <span>{{ nav_item.title }}</span>
+            {% if nav_item.children %}
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-muted-fg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path d="M9 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+            {% endif %}
+          </a>
+          {% if nav_item.children %}
+          <ul class="mt-2 space-y-1 border-l border-muted pl-4">
+            {% for child in nav_item.children %}
+            <li>
+              <a href="{{ child.url | url }}" class="block rounded-md px-3 py-1 text-sm transition hover:bg-muted hover:text-fg {% if child.active %}bg-muted text-fg{% else %}text-muted-fg{% endif %}">{{ child.title }}</a>
+            </li>
+            {% endfor %}
+          </ul>
+          {% endif %}
+        </li>
+        {% endfor %}
+      </ul>
+    </div>
+    {% if config.extra and config.extra.versions %}
+    <div class="rounded-md border border-muted bg-muted/40 px-3 py-3 text-xs text-muted-fg">
+      <span class="font-semibold uppercase tracking-wide">Versions</span>
+      <ul class="mt-2 space-y-1">
+        {% for version in config.extra.versions %}
+        <li>
+          <a href="{{ version.url }}" class="flex items-center justify-between rounded px-2 py-1 transition hover:bg-muted hover:text-fg {% if version.current %}bg-muted text-fg{% endif %}">
+            <span>{{ version.name }}</span>
+            {% if version.current %}
+            <span class="rounded-full bg-primary/20 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-primary">Current</span>
+            {% endif %}
+          </a>
+        </li>
+        {% endfor %}
+      </ul>
+    </div>
+    {% endif %}
+  </div>
+</nav>

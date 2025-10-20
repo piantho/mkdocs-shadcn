@@ -1,0 +1,82 @@
+site_name: MkDocs Shadcn Theme
+site_url: https://example.com/mkdocs-shadcn-theme
+repo_url: https://github.com/example/mkdocs-shadcn-theme
+repo_name: mkdocs-shadcn-theme
+nav:
+  - Introduction: index.md
+  - Getting Started: getting-started.md
+  - Guides:
+      - Overview: guides/index.md
+      - Theming: guides/theming.md
+      - Accessibility: guides/accessibility.md
+  - Reference:
+      - Components: reference/components.md
+      - Shortcuts: reference/shortcuts.md
+  - FAQ: faq.md
+  - Changelog: changelog.md
+plugins:
+  - search
+  - minify
+  - redirects
+  - git-revision-date-localized:
+      enable_creation_date: true
+      fallback_to_build_date: true
+  - awesome-pages
+extra:
+  versions:
+    - name: latest
+      url: /
+      current: true
+    - name: v0.9
+      url: /v0.9/
+
+markdown_extensions:
+  - admonition
+  - codehilite
+  - toc:
+      permalink: true
+      slugify: !!python/object/apply:pymdownx.slugs.slugify
+        kwds:
+          case: lower
+      separator: "-"
+  - pymdownx.details
+  - pymdownx.superfences:
+      custom_fences:
+        - name: component
+          class: component-example
+          format: !!python/name:mkdocs_shadcn_theme.formatters.component_fence
+  - pymdownx.highlight
+
+extra_css:
+  - assets/css/custom.css
+
+extra_javascript:
+  - assets/js/custom.js
+
+theme:
+  name: null
+  custom_dir: ../mkdocs_shadcn_theme/templates
+  language: en
+  features:
+    - search
+    - toc.integrated
+    - navigation.sections
+    - code.copy
+    - palette.switcher
+  options:
+    brand:
+      name: "MkDocs Shadcn Theme"
+    layout:
+      max_width: "1200px"
+      sidebar_width: "18rem"
+    palette:
+      primary: "var(--primary)"
+      accent: "var(--ring)"
+      muted: "var(--muted)"
+      ring: "var(--ring)"
+    search:
+      provider: lunr
+    versioning:
+      enabled: true
+    a11y:
+      high_contrast: false
